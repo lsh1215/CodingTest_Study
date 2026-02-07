@@ -2,21 +2,19 @@ import java.util.*;
 
 class Solution {
     public int solution(String[][] clothes) {
+        Map<String, Integer> map = new HashMap<>();
+        
+        for (int i = 0; i < clothes.length; i++) {
+            String type = clothes[i][1]; 
+            map.put(type, map.getOrDefault(type, 0) + 1);
+        }
+        
         int answer = 1;
-        Map<String, Integer> cMap = new HashMap<>();
-        Set<String> nSet = new HashSet<>();
         
-        for(int i=0; i<clothes.length; i++){
-            String x = clothes[i][1];
-            cMap.put(x, cMap.getOrDefault(x, 0) + 1);
-            nSet.add(x);
+        for (int count : map.values()) {
+            answer *= (count + 1);
         }
-        List<String> myList = new ArrayList<>(nSet);
-        
-        for(int i=0; i<myList.size(); i++){
-            answer *= cMap.get(myList.get(i)) + 1;
-        }
-        
-        return --answer;
+
+        return answer - 1;
     }
 }
