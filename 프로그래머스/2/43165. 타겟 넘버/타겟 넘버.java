@@ -2,29 +2,32 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] numbers, int target) {
-        int answer = 0;
+        int count = 0;
         
-        Queue<Integer> queue = new LinkedList<>();
+        Queue<Integer> queue = new ArrayDeque<>();
         
-        queue.add(0);
-        
-        for(int num : numbers){
-            int levelsize = queue.size();
-            
-            for(int j=0; j<levelsize; j++){
-                int currentSum = queue.poll();
+        for(int n : numbers){
+            if(queue.isEmpty()){
+                queue.add(n);
+                queue.add(-n);
+            }
+            else {
+                int size = queue.size();
                 
-                queue.add(currentSum + num);
-                queue.add(currentSum - num);
+                for(int i=0; i<size; i++){
+                    int current = queue.poll();
+                
+                    queue.add(current + n);
+                    queue.add(current - n);
+                }
             }
         }
         
         while(!queue.isEmpty()){
-            if (queue.poll() == target) {
-                answer++;
-            }
+            if(queue.poll() == target)
+                count++;
         }
         
-        return answer;
+        return count;
     }
 }
